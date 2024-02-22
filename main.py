@@ -5,7 +5,6 @@ from config import *
 from config import *
 
 
-
 class Reagent(ttk.Frame):
 
     def __init__(self, parent):
