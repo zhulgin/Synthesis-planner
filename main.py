@@ -2,7 +2,8 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from config import *
 from chemicals import CHEMICALS
-from limiting_reactant_class import Limiting_Reactant
+from limiting_class import Limiting
+from reactant_class import Reactant
 
 
 class App(tk.Tk):
@@ -37,32 +38,30 @@ class App(tk.Tk):
 
         # Frame for buttons
         self.button_frame = ttk.Frame(self)
-        self.button_frame.grid(column = 0, row = self.rows, padx = PAD_X, pady = PAD_Y)
+        self.button_frame.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
 
         # Calculate button
         self.calculate_button = ttk.Button(self.button_frame, text = 'Calculate', command = lambda: self.calculate())
-        self.calculate_button.pack(side = 'left', padx = PAD_X, pady = PAD_Y)
+        self.calculate_button.pack(side = 'left', padx = PADX, pady = PADY)
 
         # Add button
         self.add_button = ttk.Button(self.button_frame, text = 'Add reactant', command = lambda: self.add_reactant())
-        self.add_button.pack(side = 'left', padx = PAD_X, pady = PAD_Y)
+        self.add_button.pack(side = 'left', padx = PADX, pady = PADY)
 
         self.rows += 1
 
 
     def create_limiting(self):
-        self.limiting_row = Limiting_Reactant(self, limiting = True)
-        self.limiting_row.grid(column = 0, row = 1, padx = PAD_X, pady = PAD_Y)
+        self.limiting = Limiting(self)
+        self.limiting.grid(column = 0, row = 1, padx = PADX, pady = PADY, sticky = 'e')
 
         self.rows += 1
         
 
     def add_reactant(self):
 
-        print('Adds reactant')
-
-        new_reactant = Limiting_Reactant(self, limiting = False)
-        new_reactant.grid(column = 0, row = self.rows, padx = PAD_X, pady = PAD_Y)
+        new_reactant = Reactant(self)
+        new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
 
         self.rows += 1
 
@@ -71,6 +70,7 @@ class App(tk.Tk):
 
     def calculate(self):
         print('Calculating!')
+        self.limiting.calculate_n()
 
     
 
