@@ -22,7 +22,6 @@ class App(tk.Tk):
         self.mainloop()
 
     def setup(self):
-
         # Presentation
         ttk.Style(theme = 'darkly')
         self.title(APP_NAME)
@@ -35,7 +34,6 @@ class App(tk.Tk):
         self.bind('<Return>', lambda event: self.calculate())
 
     def create_buttons(self):
-
         # Frame for buttons
         self.button_frame = ttk.Frame(self)
         self.button_frame.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
@@ -59,7 +57,6 @@ class App(tk.Tk):
         
 
     def add_reactant(self):
-
         new_reactant = Reactant(self)
         new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
 
@@ -69,7 +66,7 @@ class App(tk.Tk):
 
 
     def calculate(self):
-        print('Calculating!')
+        # print('Calculating!')
         self.limiting.calculate_n()
 
     

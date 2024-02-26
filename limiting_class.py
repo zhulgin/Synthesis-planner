@@ -13,10 +13,10 @@ class Limiting(ttk.Frame):
         self.create_MW_label()
         self.create_eq_label()
         self.create_state_label()
-        self.create_mmol_label()
-
+        
         # Create entries and dropdown
         self.create_dropdown()
+        self.create_mmol_entry()
         self.create_mass_entry()
         self.create_volume_entry()
         
@@ -33,17 +33,19 @@ class Limiting(ttk.Frame):
 
     # Label displaying eq of selected chemical
     def create_eq_label(self):
-        ttk.Label(self, text = '1 eq.').grid(column = 6, row = 0, padx = PADX, pady = PADY)
+        ttk.Label(self, text = '1 eq.').grid(column = 7, row = 0, padx = PADX, pady = PADY)
 
     # Label displaying state of selected chemical
     def create_state_label(self):
         self.selection_state_label = ttk.Label(self, text = '')
         self.selection_state_label.grid(column = 1, row = 2, padx = PADX, pady = PADY)
 
-
-    def create_mmol_label(self):
-        self.mmol_label = ttk.Label(self, text = '')
-        self.mmol_label.grid(column = 7, row = 0, padx = PADX, pady = PADY)
+    # Entry for amount of substance. (Always disabled, just output)
+    def create_mmol_entry(self):
+        self.mmol_var = tk.StringVar()
+        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled')
+        self.mmol_entry.grid(column = 6, row = 0, padx = PADX, pady = PADY)
+        ttk.Label(self, text = "Amount of substance (mmol)").grid(column = 6, row = 1, padx = PADX, pady = PADY)
 
 
 
@@ -60,14 +62,14 @@ class Limiting(ttk.Frame):
         self.mass_var = tk.StringVar()
         self.mass_entry = ttk.Entry(self, textvariable = self.mass_var)
         self.mass_entry.grid(column = 2, row = 0, padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'mg').grid(column = 2, row = 1, padx = PADX, pady = PADY)
+        ttk.Label(self, text = 'Mass (mg').grid(column = 2, row = 1, padx = PADX, pady = PADY)
 
     # Entry for volume
     def create_volume_entry(self):
         self.volume_var = tk.StringVar()
         self.volume_entry = ttk.Entry(self, textvariable = self.volume_var)
         self.volume_entry.grid(column = 4, row = 0, padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'mL').grid(column = 4, row = 1, padx = PADX, pady = PADY)
+        ttk.Label(self, text = 'Volume (mL)').grid(column = 4, row = 1, padx = PADX, pady = PADY)
 
 
     
@@ -87,6 +89,7 @@ class Limiting(ttk.Frame):
             self.mass_entry.config(state = 'enabled')
             self.selection_state_label.config(text = 'Solid')
 
+    # Calculate amount of substance and display in the entry box
     def calculate_n(self):
 
         try:
@@ -102,7 +105,7 @@ class Limiting(ttk.Frame):
                 n = m / mw
 
                 self.mass_var.set(m)
-                self.mmol_label.config(text = f'{round(n, 1)} mmol')
+                self.mmol_var.set(round(n, 1))
 
             elif CHEMICALS[self.selection_var.get()]['state'] == 's':
             
@@ -112,7 +115,7 @@ class Limiting(ttk.Frame):
                 mw = float(chemical['MW'])
                 n = m / mw
 
-                self.mmol_label.config(text = f'{round(n, 1)} mmol')
+                self.mmol_var.set(round(n, 1))
 
         except ValueError:
             print('Invalid input')
