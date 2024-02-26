@@ -1,6 +1,6 @@
 
+APP_NAME = 'Experiment Planner'
+DIMENSIONS = '800x600'
 
-
-
-app_name = "Synthesis planner"
-dimensions = "1200x800"
+PAD_X = 5
+PAD_Y = 5

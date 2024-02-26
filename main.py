@@ -1,55 +1,50 @@
 import tkinter as tk
 import ttkbootstrap as ttk
-
 from config import *
-from config import *
-
-
-class Chemical(ttk.Frame):
-
-    def __init__(self, parent):
-        super().__init__(master = parent)
-
-        self.widgets()
-        self.display_widgets
-
-
-
-    def widgets(self):
-
-        testlist = ["Select chemical", "hell", "o", "world"]
-
-        self.selected_chemical = tk.StringVar()
-        self.selected_chemical.set(testlist[0])
-
-        self.chemical_dropdown = ttk.OptionMenu(self, self.selected_chemical, *testlist)
-        self.chemical_dropdown.pack()
-
-    def display_widgets(self):
-        self.chemical_dropdown.grid(column = 1, row = 1)
-
-
+from chemicals import CHEMICALS
+from chemical_row import Limiting_Reactant
 
 
 class App(tk.Tk):
+
     def __init__(self):
         super().__init__()
-
-
-        style = ttk.Style(theme = 'darkly')
+        
         self.setup()
-        self.widgets()
+        self.create_limiting()
         self.mainloop()
 
     def setup(self):
-        self.title(app_name)
-        self.geometry(dimensions)
+        ttk.Style(theme = 'darkly')
+        self.title(APP_NAME)
+        self.geometry(DIMENSIONS)
         self.resizable(False, False)
         self.bind('<Escape>', lambda event: self.destroy())
 
-    def widgets(self):
-        self.reagent = Chemical(self)
-        self.reagent.grid(column = 0, row = 0)
+    def create_limiting(self):
+        Limiting_Reactant(self, limiting = True).grid(column = 0, row = 0, padx = PAD_X, pady = PAD_Y)
+
+    def calculate_mass(self):
+
+        try:
+            # Get inputs
+            eq_ratio = float()
+            limiting_mass = float()
+            limiting_name = str()
+            limiting_MW = float()
+
+            chemical_name = str()
+            chemical_MW = float()
+            
+            # Calculate mass
+            mass_needed = eq_ratio * chemical_MW * limiting_mass / limiting_MW
+        
+            # Update result label
+            # result_label.config(text=f"Mass needed: {mass_needed:.2f} g")
+
+        except ValueError:
+            # result_label.config(text="Invalid input")
+            pass
 
 
     
