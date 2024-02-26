@@ -62,7 +62,7 @@ class Limiting(ttk.Frame):
         self.mass_var = tk.StringVar()
         self.mass_entry = ttk.Entry(self, textvariable = self.mass_var)
         self.mass_entry.grid(column = 2, row = 0, padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'Mass (mg').grid(column = 2, row = 1, padx = PADX, pady = PADY)
+        ttk.Label(self, text = 'Mass (mg)').grid(column = 2, row = 1, padx = PADX, pady = PADY)
 
     # Entry for volume
     def create_volume_entry(self):

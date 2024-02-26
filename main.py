@@ -30,8 +30,8 @@ class App(tk.Tk):
         self.iconbitmap(APP_ICON)
 
         # Key bindings
-        # self.bind('<Escape>', lambda event: self.destroy())
-        # self.bind('<Return>', lambda event: self.calculate())
+        self.bind('<Escape>', lambda event: self.destroy())
+        self.bind('<Return>', lambda event: self.calculate())
 
     def create_buttons(self):
         # Frame for buttons
