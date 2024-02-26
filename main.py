@@ -1,13 +1,15 @@
+# Import external packages
 import tkinter as tk
 import ttkbootstrap as ttk
+# Import constants from config file
 from config import *
+# Import chemicals dictionary
 from chemicals import CHEMICALS
+# Import classes
 from limiting_class import Limiting
 from reactant_class import Reactant
 
-
 class App(tk.Tk):
-
     def __init__(self):
         super().__init__()
         
@@ -62,11 +64,7 @@ class App(tk.Tk):
 
         self.rows += 1
 
-
-
-
     def calculate(self):
-        # print('Calculating!')
         self.limiting.calculate_n()
 
     

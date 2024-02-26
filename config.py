@@ -1,6 +1,6 @@
 
 APP_NAME = 'Experiment Planner'
-DIMENSIONS = '800x600'
+DIMENSIONS = '1100x600'
 APP_ICON = 'assets/hexagon.ico'
 
 PADX = 5
