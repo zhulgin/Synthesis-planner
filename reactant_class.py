@@ -29,7 +29,11 @@ class Reactant(ttk.Frame):
     def create_kind_dropdown(self):
 
         self.kind_var = tk.StringVar()
-        self.kind_dropdown = ttk.Combobox(self, textvariable = self.kind_var, state = 'readonly', width = COL_WIDTH)
+        self.kind_dropdown = ttk.Combobox(self, 
+            textvariable = self.kind_var, 
+            state = 'readonly', 
+            width = COL_WIDTH - 2)
+        
         self.kind_dropdown['values'] = KINDS
         self.kind_dropdown.grid(
             column = 0, row = 0, 
@@ -37,7 +41,9 @@ class Reactant(ttk.Frame):
 
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
-        self.selection_MW_label = ttk.Label(self, text = 'No chemical selected', width = COL_WIDTH)
+        self.selection_MW_label = ttk.Label(self, 
+            text = 'No chemical selected', 
+            width = COL_WIDTH)
         self.selection_MW_label.grid(
             column = 1, row = 1, 
             padx = PADX, pady = PADY)
@@ -45,17 +51,24 @@ class Reactant(ttk.Frame):
     # Label displaying eq of selected chemical
     def create_eq_entry(self):
         self.eq_var = tk.StringVar()
-        self.eq_entry = ttk.Entry(self, textvariable = self.eq_var, style = 'success.TEntry', width = COL_WIDTH)
+        self.eq_entry = ttk.Entry(self, 
+            textvariable = self.eq_var, 
+            style = 'success.TEntry', 
+            width = COL_WIDTH)
         self.eq_entry.grid(
             column = 5, row = 0, 
             padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'eq.', width = COL_WIDTH).grid(
-            column = 5, row = 1, 
-            padx = PADX, pady = PADY)
+        ttk.Label(self, 
+            text = 'eq.', 
+            width = COL_WIDTH).grid(
+                column = 5, row = 1, 
+                padx = PADX, pady = PADY)
 
     # Label displaying state of selected chemical
     def create_state_label(self):
-        self.selection_state_label = ttk.Label(self, text = '', width = COL_WIDTH)
+        self.selection_state_label = ttk.Label(self, 
+            text = '', 
+            width = COL_WIDTH)
         self.selection_state_label.grid(
             column = 1, row = 2, 
             padx = PADX, pady = PADY)
@@ -63,7 +76,7 @@ class Reactant(ttk.Frame):
     # Creates dropdown menu for selecting chemical
     def create_dropdown(self):
         self.selection_var = tk.StringVar()
-        self.selection_dropdown = ttk.Combobox(self, textvariable = self.selection_var, state = 'readonly', width = COL_WIDTH)
+        self.selection_dropdown = ttk.Combobox(self, textvariable = self.selection_var, state = 'readonly', width = COL_WIDTH - 2)
         self.selection_dropdown['values'] = list(CHEMICALS.keys())
         self.selection_dropdown.grid(
             column = 1, row = 0, 
@@ -73,13 +86,20 @@ class Reactant(ttk.Frame):
     # Entry for mass
     def create_mass_entry(self):
         self.mass_var = tk.StringVar()
-        self.mass_entry = ttk.Entry(self, textvariable = self.mass_var, state = 'disabled', style = 'info.TEntry', foreground = 'white', width = COL_WIDTH)
+        self.mass_entry = ttk.Entry(self, 
+            textvariable = self.mass_var, 
+            state = 'disabled', 
+            style = 'info.TEntry', 
+            foreground = 'white', 
+            width = COL_WIDTH)
         self.mass_entry.grid(
             column = 2, row = 0, 
             padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'Mass (mg)', width = COL_WIDTH).grid(
-            column = 2, row = 1, 
-            padx = PADX, pady = PADY)
+        ttk.Label(self, 
+            text = 'Mass (mg)', 
+            width = COL_WIDTH).grid(
+                column = 2, row = 1, 
+                padx = PADX, pady = PADY)
 
     # Entry for volume
     def create_volume_entry(self):

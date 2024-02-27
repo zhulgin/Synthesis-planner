@@ -15,7 +15,6 @@ class Limiting(ttk.Frame):
         self.create_kind_label()
         self.create_MW_label()
         self.create_eq_entry()
-        self.create_state_label()
         
         # Create entries and dropdown
         self.create_dropdown()
@@ -25,14 +24,23 @@ class Limiting(ttk.Frame):
         
     # Creates a label stating if the chemical is the limiting reactant or not
     def create_kind_label(self):
-
-        ttk.Label(self, text = 'Limiting reactant', width = COL_WIDTH).grid(
-            column = 0, row = 0, 
-            padx = PADX, pady = PADY)
+        
+        self.kind_var = tk.StringVar()
+        
+        ttk.Entry(self, 
+            textvariable = self.kind_var, 
+            state = 'disabled', 
+            foreground = 'white', 
+            width = COL_WIDTH).grid(
+                column = 0, row = 0, 
+                padx = PADX, pady = PADY)
+        self.kind_var.set('Limiting reagent')
 
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
-        self.selection_MW_label = ttk.Label(self, text = 'No chemical selected', width = COL_WIDTH)
+        self.selection_MW_label = ttk.Label(self, 
+            text = 'No chemical selected', 
+            width = COL_WIDTH)
         self.selection_MW_label.grid(
             column = 1, row = 1, 
             padx = PADX, pady = PADY)
@@ -41,38 +49,48 @@ class Limiting(ttk.Frame):
     def create_eq_entry(self):
         self.eq_var = tk.StringVar()
         self.eq_var.set(1)
-        self.eq_entry = ttk.Entry(self, textvariable = self.eq_var, state = 'disabled', style = 'info.TEntry', foreground = 'white', width = COL_WIDTH)
+        self.eq_entry = ttk.Entry(self, 
+            textvariable = self.eq_var, 
+            state = 'disabled', 
+            style = 'info.TEntry', 
+            foreground = 'white', 
+            width = COL_WIDTH)
         self.eq_entry.grid(
             column = 5, row = 0, 
             padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'eq.', width = COL_WIDTH).grid(
-            column = 5, row = 1, 
-            padx = PADX, pady = PADY)
-
-    # Label displaying state of selected chemical
-    def create_state_label(self):
-        self.selection_state_label = ttk.Label(self, text = '', width = COL_WIDTH)
-        self.selection_state_label.grid(
-            column = 1, row = 2, 
-            padx = PADX, pady = PADY)
+        ttk.Label(self, 
+            text = 'eq.', 
+            width = COL_WIDTH).grid(
+                column = 5, row = 1, 
+                padx = PADX, pady = PADY)
 
     # Entry for amount of substance. (Always disabled, just output)
     def create_mmol_entry(self):
         self.mmol_var = tk.StringVar()
-        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry', foreground = 'white', width = COL_WIDTH)
+        self.mmol_entry = ttk.Entry(self, 
+            textvariable = self.mmol_var, 
+            state = 'disabled', 
+            style = 'info.TEntry', 
+            foreground = 'white', 
+            width = COL_WIDTH)
         self.mmol_entry.grid(
             column = 4, row = 0, 
             padx = PADX, pady = PADY)
-        ttk.Label(self, text = "Amount of\nsubstance (mmol)", width = COL_WIDTH).grid(
-            column = 4, row = 1, 
-            padx = PADX, pady = PADY)
+        ttk.Label(self, 
+            text = "Amount of\nsubstance (mmol)", 
+            width = COL_WIDTH).grid(
+                column = 4, row = 1, 
+                padx = PADX, pady = PADY)
 
 
 
     # Creates dropdown menu for selecting chemical
     def create_dropdown(self):
         self.selection_var = tk.StringVar()
-        self.selection_dropdown = ttk.Combobox(self, textvariable = self.selection_var, state = 'readonly', width = COL_WIDTH)
+        self.selection_dropdown = ttk.Combobox(self, 
+            textvariable = self.selection_var, 
+            state = 'readonly', 
+            width = COL_WIDTH - 2)
         self.selection_dropdown['values'] = list(CHEMICALS.keys())
         self.selection_dropdown.grid(
             column = 1, row = 0, 
@@ -82,24 +100,31 @@ class Limiting(ttk.Frame):
     # Entry for mass
     def create_mass_entry(self):
         self.mass_var = tk.StringVar()
-        self.mass_entry = ttk.Entry(self, textvariable = self.mass_var, width = COL_WIDTH)
+        self.mass_entry = ttk.Entry(self, 
+            textvariable = self.mass_var, 
+            width = COL_WIDTH)
         self.mass_entry.grid(
             column = 2, row = 0, 
             padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'Mass (mg)', width = COL_WIDTH).grid(
-            column = 2, row = 1, 
-            padx = PADX, pady = PADY)
+        ttk.Label(self, 
+            text = 'Mass (mg)', 
+            width = COL_WIDTH).grid(
+                column = 2, row = 1, 
+                padx = PADX, pady = PADY)
 
     # Entry for volume
     def create_volume_entry(self):
         self.volume_var = tk.StringVar()
-        self.volume_entry = ttk.Entry(self, textvariable = self.volume_var, width = COL_WIDTH)
+        self.volume_entry = ttk.Entry(self, 
+            textvariable = self.volume_var, 
+            width = COL_WIDTH)
         self.volume_entry.grid(
             column = 3, row = 0, 
             padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'Volume (mL)').grid(
-            column = 3, row = 1, 
-            padx = PADX, pady = PADY)
+        ttk.Label(self, 
+            text = 'Volume (mL)').grid(
+                column = 3, row = 1, 
+                padx = PADX, pady = PADY)
 
 
     
@@ -113,11 +138,9 @@ class Limiting(ttk.Frame):
         if updated_state == 'l':
             self.mass_entry.config(state = 'disabled', style = 'info.TEntry', foreground = 'white')
             self.volume_entry.config(state = 'enabled', style = 'success.TEntry')
-            self.selection_state_label.config(text = 'Liquid')
         if updated_state == 's':
             self.volume_entry.config(state = 'disabled', style = 'info.TEntry', foreground = 'white')
             self.mass_entry.config(state = 'enabled', style = 'success.TEntry')
-            self.selection_state_label.config(text = 'Solid')
 
     # Calculate amount of substance and display in the entry box
     def calculate_n(self):

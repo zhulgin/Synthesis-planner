@@ -42,33 +42,53 @@ class App(tk.Tk):
     def create_buttons(self):
         # Frame for buttons
         self.button_frame = ttk.Frame(self)
-        self.button_frame.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
+        self.button_frame.grid(
+            column = 0, row = self.rows, 
+            padx = PADX, pady = PADY)
 
         # Calculate button
-        self.calculate_button = ttk.Button(self.button_frame, text = 'Calculate', command = lambda: self.calculate())
-        self.calculate_button.pack(side = 'left', padx = PADX, pady = PADY)
+        self.calculate_button = ttk.Button(self.button_frame, 
+            text = 'Calculate', 
+            command = lambda: self.calculate())
+        self.calculate_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
 
         # Add button
-        self.add_button = ttk.Button(self.button_frame, text = 'Add reactant', command = lambda: self.add_reactant())
-        self.add_button.pack(side = 'left', padx = PADX, pady = PADY)
+        self.add_button = ttk.Button(self.button_frame, 
+            text = 'Add reactant', 
+            command = lambda: self.add_reactant())
+        self.add_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
 
         # Export button
-        self.export_button = ttk.Button(self.button_frame, text = 'Export pdf', command = lambda: self.create_pdf())
-        self.export_button.pack(side = 'left', padx = PADX, pady = PADY)
+        self.export_button = ttk.Button(self.button_frame, 
+            text = 'Export pdf', 
+            command = lambda: self.create_pdf())
+        self.export_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
 
         self.rows += 1
 
 
     def create_limiting(self):
         self.limiting = Limiting(self)
-        self.limiting.grid(column = 0, row = 1, padx = PADX, pady = PADY, sticky = 'w')
+        self.limiting.grid(
+            column = 0, row = 1, 
+            padx = PADX, pady = PADY, 
+            sticky = 'w')
 
         self.rows += 1
         
 
     def add_reactant(self):
         new_reactant = Reactant(self)
-        new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY, sticky = 'w')
+        new_reactant.grid(
+            column = 0, row = self.rows, 
+            padx = PADX, pady = PADY, 
+            sticky = 'w')
         self.reactants.append(new_reactant)
 
         self.rows += 1
@@ -92,7 +112,6 @@ class App(tk.Tk):
                 reactant.mass_var.set(round(m, 2))
 
                 if CHEMICALS[chemical_name]['state'] == 'l':
-
                     density = CHEMICALS[chemical_name]['density']
                     v = m / (density * 10**3) # Multiply by 10^3 to get density in mg/mL instead of g/mL
 
@@ -108,7 +127,6 @@ class App(tk.Tk):
         
         try:
             self.calculate()
-
             limiting_name = self.limiting.selection_var.get()
             limiting_n = self.limiting.mmol_var.get()
             limiting_m = self.limiting.mass_var.get()
@@ -124,7 +142,6 @@ class App(tk.Tk):
             }
 
             for reactant in self.reactants:
-
                 name = reactant.selection_var.get()
                 m = reactant.mass_var.get(),
                 v = reactant.volume_var.get()
@@ -137,13 +154,10 @@ class App(tk.Tk):
                     'amount': n,
                     'eq': eq
                 }
-
             export_pdf(experiment_info)
-        
         except:
             print('Export error')
     
-
 
 if __name__ == "__main__":
     App()
