@@ -25,7 +25,8 @@ class App(tk.Tk):
 
     def setup(self):
         # Presentation
-        ttk.Style(theme = 'darkly')
+        style = ttk.Style(theme = 'darkly')
+
         self.title(APP_NAME)
         self.geometry(DIMENSIONS)
         self.resizable(True, True)
@@ -34,6 +35,8 @@ class App(tk.Tk):
         # Key bindings
         self.bind('<Escape>', lambda event: self.destroy())
         self.bind('<Return>', lambda event: self.calculate())
+
+        
 
     def create_buttons(self):
         # Frame for buttons
@@ -53,19 +56,48 @@ class App(tk.Tk):
 
     def create_limiting(self):
         self.limiting = Limiting(self)
-        self.limiting.grid(column = 0, row = 1, padx = PADX, pady = PADY, sticky = 'e')
+        self.limiting.grid(column = 0, row = 1, padx = PADX, pady = PADY, sticky = 'w')
 
         self.rows += 1
         
 
     def add_reactant(self):
         new_reactant = Reactant(self)
-        new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
+        new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY, sticky = 'w')
+        self.reactants.append(new_reactant)
 
         self.rows += 1
 
     def calculate(self):
-        self.limiting.calculate_n()
+        try:
+            self.limiting.calculate_n()
+
+            limiting_n = float(self.limiting.mmol_var.get())
+
+            for reactant in self.reactants:
+                
+                chemical_name = reactant.selection_var.get()
+                mw = CHEMICALS[chemical_name]['MW']
+                eq = float(reactant.eq_var.get())
+                n = eq * limiting_n
+                m = n * mw
+                v = float()
+
+                reactant.mmol_var.set(round(n, 2))
+                reactant.mass_var.set(round(m, 2))
+
+                if CHEMICALS[chemical_name]['state'] == 'l':
+
+                    density = CHEMICALS[chemical_name]['density']
+                    v = m / (density * 10**3) # Multiply by 10^3 to get density in mg/mL instead of g/mL
+
+                elif CHEMICALS[chemical_name]['state'] == 's':
+                    v = 'N/A'
+
+                reactant.volume_var.set(round(v, 2))
+        
+        except:
+            print('Invalid input')
 
     
 

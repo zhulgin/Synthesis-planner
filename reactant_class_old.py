@@ -1,33 +1,34 @@
-# Import external packages
 import tkinter as tk
 import ttkbootstrap as ttk
-# Import constants from config file
 from config import *
-# Import chemicals dictionary
 from chemicals import CHEMICALS
 
 
-class Limiting(ttk.Frame):
-    def __init__(self, parent):
+class Reactant(ttk.Frame):
+    def __init__(self, parent, kind = 'Reactant'):
         super().__init__(master = parent)
 
+        self.kind = kind
+
         # Create labels
-        self.create_kind_label()
+        self.create_kind_dropdown()
         self.create_MW_label()
         self.create_eq_label()
         self.create_state_label()
-        
+
         # Create entries and dropdown
         self.create_dropdown()
-        self.create_mmol_entry()
         self.create_mass_entry()
         self.create_volume_entry()
         
     # Creates a label stating if the chemical is the limiting reactant or not
-    def create_kind_label(self):
+    def create_kind_dropdown(self):
 
-        kind_label = 'Limiting reactant'
-        ttk.Label(self, text = kind_label, width = 20).grid(column = 0, row = 0, padx = PADX, pady = PADY)
+        self.kind_var = tk.StringVar()
+        self.kind_dropdown = ttk.Combobox(self, textvariable = self.kind_var, state = 'readonly', width = KIND_COLUMN_WIDTH)
+        self.kind_dropdown['values'] = KINDS
+        self.kind_dropdown.grid(column = 0, row = 0, padx = PADX, pady = PADY)
+        #self.kind_dropdown.bind('<<ComboboxSelected>>', lambda event: self.update())
 
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
@@ -36,19 +37,12 @@ class Limiting(ttk.Frame):
 
     # Label displaying eq of selected chemical
     def create_eq_label(self):
-        ttk.Label(self, text = '1 eq.').grid(column = 7, row = 0, padx = PADX, pady = PADY)
+        ttk.Label(self, text = '1 eq.').grid(column = 6, row = 0, padx = PADX, pady = PADY)
 
     # Label displaying state of selected chemical
     def create_state_label(self):
         self.selection_state_label = ttk.Label(self, text = '')
         self.selection_state_label.grid(column = 1, row = 2, padx = PADX, pady = PADY)
-
-    # Entry for amount of substance. (Always disabled, just output)
-    def create_mmol_entry(self):
-        self.mmol_var = tk.StringVar()
-        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry', foreground = 'white')
-        self.mmol_entry.grid(column = 6, row = 0, padx = PADX, pady = PADY)
-        ttk.Label(self, text = "Amount of substance (mmol)").grid(column = 6, row = 1, padx = PADX, pady = PADY)
 
 
 
@@ -65,14 +59,14 @@ class Limiting(ttk.Frame):
         self.mass_var = tk.StringVar()
         self.mass_entry = ttk.Entry(self, textvariable = self.mass_var)
         self.mass_entry.grid(column = 2, row = 0, padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'Mass (mg)').grid(column = 2, row = 1, padx = PADX, pady = PADY)
+        ttk.Label(self, text = 'mg').grid(column = 2, row = 1, padx = PADX, pady = PADY)
 
     # Entry for volume
     def create_volume_entry(self):
         self.volume_var = tk.StringVar()
         self.volume_entry = ttk.Entry(self, textvariable = self.volume_var)
         self.volume_entry.grid(column = 4, row = 0, padx = PADX, pady = PADY)
-        ttk.Label(self, text = 'Volume (mL)').grid(column = 4, row = 1, padx = PADX, pady = PADY)
+        ttk.Label(self, text = 'mL').grid(column = 4, row = 1, padx = PADX, pady = PADY)
 
 
     
@@ -84,44 +78,13 @@ class Limiting(ttk.Frame):
 
         updated_state = CHEMICALS[self.selection_var.get()]['state']
         if updated_state == 'l':
-            self.mass_entry.config(state = 'disabled', style = 'info.TEntry', foreground = 'white')
-            self.volume_entry.config(state = 'enabled', style = 'success.TEntry')
+            self.mass_entry.config(state = 'disabled')
+            self.volume_entry.config(state = 'enabled')
             self.selection_state_label.config(text = 'Liquid')
         if updated_state == 's':
-            self.volume_entry.config(state = 'disabled', style = 'info.TEntry', foreground = 'white')
-            self.mass_entry.config(state = 'enabled', style = 'success.TEntry')
+            self.volume_entry.config(state = 'disabled')
+            self.mass_entry.config(state = 'enabled')
             self.selection_state_label.config(text = 'Solid')
-
-    # Calculate amount of substance and display in the entry box
-    def calculate_n(self):
-
-        if CHEMICALS[self.selection_var.get()]['state'] == 'l':
-
-            chemical = CHEMICALS[self.selection_var.get()]
-            v = float(self.volume_var.get())
-            density = float(chemical['density'])
-
-            m = (density * 10**3) * v # Multiply by 10^3 to get density in mg/mL instead of g/mL
-            mw = chemical['MW']
-            n = m / mw
-
-            self.mass_var.set(m)
-            self.mmol_var.set(round(n, 2))
-
-        elif CHEMICALS[self.selection_var.get()]['state'] == 's':
-        
-            chemical = CHEMICALS[self.selection_var.get()]
-
-            m = float(self.mass_entry.get())
-            mw = float(chemical['MW'])
-            n = m / mw
-
-            self.mmol_var.set(round(n, 2))
-
-
-
-
-
 
     
 
