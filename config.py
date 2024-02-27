@@ -7,4 +7,3 @@ PADX = 5
 PADY = 2
 
 KINDS = ['Reactant', 'Reagent', 'Catalyst', 'Solvent']
-KIND_COLUMN_WIDTH = 16

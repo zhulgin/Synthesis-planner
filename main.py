@@ -53,19 +53,44 @@ class App(tk.Tk):
 
     def create_limiting(self):
         self.limiting = Limiting(self)
-        self.limiting.grid(column = 0, row = 1, padx = PADX, pady = PADY, sticky = 'e')
+        self.limiting.grid(column = 0, row = 1, padx = PADX, pady = PADY, sticky = 'w')
 
         self.rows += 1
         
 
     def add_reactant(self):
         new_reactant = Reactant(self)
-        new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY)
+        new_reactant.grid(column = 0, row = self.rows, padx = PADX, pady = PADY, sticky = 'w')
+        self.reactants.append(new_reactant)
 
         self.rows += 1
 
     def calculate(self):
         self.limiting.calculate_n()
+
+        limiting_n = float(self.limiting.mmol_var.get())
+
+        for reactant in self.reactants:
+            
+            chemical_name = reactant.selection_var.get()
+            mw = CHEMICALS[chemical_name]['MW']
+            eq = float(reactant.eq_var.get())
+            n = eq * limiting_n
+            m = n * mw
+            v = float()
+
+            reactant.mmol_var.set(n)
+            reactant.mass_var.set(m)
+
+            if CHEMICALS[chemical_name]['MW'] == 'l':
+
+                density = CHEMICALS[chemical_name]['density']
+                v = m / density
+
+            elif CHEMICALS[chemical_name]['MW'] == 's':
+                v = '-'
+
+            reactant.volume_var.set(v)
 
     
 

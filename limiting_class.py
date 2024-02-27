@@ -24,7 +24,7 @@ class Limiting(ttk.Frame):
     def create_kind_label(self):
 
         kind_label = 'Limiting reactant'
-        ttk.Label(self, text = kind_label, width = KIND_COLUMN_WIDTH).grid(column = 0, row = 0, padx = PADX, pady = PADY)
+        ttk.Label(self, text = kind_label, width = 20).grid(column = 0, row = 0, padx = PADX, pady = PADY)
 
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
