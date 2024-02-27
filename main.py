@@ -69,33 +69,30 @@ class App(tk.Tk):
         self.rows += 1
 
     def calculate(self):
+        self.limiting.calculate_n()
+        limiting_n = float(self.limiting.mmol_var.get())
+
         try:
-            self.limiting.calculate_n()
-
-            limiting_n = float(self.limiting.mmol_var.get())
-
             for reactant in self.reactants:
-                
                 chemical_name = reactant.selection_var.get()
+                chemical_state = CHEMICALS[chemical_name]['state']
                 mw = CHEMICALS[chemical_name]['MW']
                 eq = float(reactant.eq_var.get())
                 n = eq * limiting_n
                 m = n * mw
-                v = float()
 
                 reactant.mmol_var.set(round(n, 2))
                 reactant.mass_var.set(round(m, 2))
 
-                if CHEMICALS[chemical_name]['state'] == 'l':
+                if chemical_state == 'l':
 
                     density = CHEMICALS[chemical_name]['density']
                     v = m / (density * 10**3) # Multiply by 10^3 to get density in mg/mL instead of g/mL
+                    reactant.volume_var.set(round(v, 2))
 
-                elif CHEMICALS[chemical_name]['state'] == 's':
+                elif chemical_state == 's':
                     v = 'N/A'
-
-                reactant.volume_var.set(round(v, 2))
-        
+                    reactant.volume_var.set(v)
         except:
             print('Invalid input')
 
