@@ -14,7 +14,7 @@ class Reactant(ttk.Frame):
         self.kind = kind
 
         # Create labels
-        # self.create_kind_dropdown()
+        self.create_kind_dropdown()
         self.create_MW_label()
         self.create_eq_entry()
         self.create_state_label()

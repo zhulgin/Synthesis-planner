@@ -5,9 +5,10 @@ import ttkbootstrap as ttk
 from config import *
 # Import chemicals dictionary
 from chemicals import CHEMICALS
-# Import classes
+# Import classes and functions
 from limiting_class import Limiting
 from reactant_class import Reactant
+from export_pdf import export_pdf
 
 class App(tk.Tk):
     def __init__(self):
@@ -50,6 +51,10 @@ class App(tk.Tk):
         # Add button
         self.add_button = ttk.Button(self.button_frame, text = 'Add reactant', command = lambda: self.add_reactant())
         self.add_button.pack(side = 'left', padx = PADX, pady = PADY)
+
+        # Export button
+        self.export_button = ttk.Button(self.button_frame, text = 'Export pdf', command = lambda: self.create_pdf())
+        self.export_button.pack(side = 'left', padx = PADX, pady = PADY)
 
         self.rows += 1
 
@@ -99,6 +104,44 @@ class App(tk.Tk):
         except:
             print('Invalid input')
 
+    def create_pdf(self):
+        
+        try:
+            self.calculate()
+
+            limiting_name = self.limiting.selection_var.get()
+            limiting_n = self.limiting.mmol_var.get()
+            limiting_m = self.limiting.mass_var.get()
+            limiting_v = self.limiting.volume_var.get()
+
+            experiment_info = {
+                limiting_name: {
+                    'mass': limiting_m,
+                    'volume': limiting_v,
+                    'amount': limiting_n,
+                    'eq': 1
+                }
+            }
+
+            for reactant in self.reactants:
+
+                name = reactant.selection_var.get()
+                m = reactant.mass_var.get(),
+                v = reactant.volume_var.get()
+                n = reactant.mmol_var.get()
+                eq = reactant.eq_var.get()
+
+                experiment_info[name] = {
+                    'mass': m,
+                    'volume': v,
+                    'amount': n,
+                    'eq': eq
+                }
+
+            export_pdf(experiment_info)
+        
+        except:
+            print('Export error')
     
 
 
