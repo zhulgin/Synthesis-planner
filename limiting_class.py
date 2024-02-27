@@ -1,6 +1,9 @@
+# Import external packages
 import tkinter as tk
 import ttkbootstrap as ttk
+# Import constants from config file
 from config import *
+# Import chemicals dictionary
 from chemicals import CHEMICALS
 
 
@@ -43,7 +46,7 @@ class Limiting(ttk.Frame):
     # Entry for amount of substance. (Always disabled, just output)
     def create_mmol_entry(self):
         self.mmol_var = tk.StringVar()
-        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled')
+        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry')
         self.mmol_entry.grid(column = 6, row = 0, padx = PADX, pady = PADY)
         ttk.Label(self, text = "Amount of substance (mmol)").grid(column = 6, row = 1, padx = PADX, pady = PADY)
 
@@ -81,44 +84,41 @@ class Limiting(ttk.Frame):
 
         updated_state = CHEMICALS[self.selection_var.get()]['state']
         if updated_state == 'l':
-            self.mass_entry.config(state = 'disabled')
-            self.volume_entry.config(state = 'enabled')
+            self.mass_entry.config(state = 'disabled', style = 'info.TEntry')
+            self.volume_entry.config(state = 'enabled', style = 'success.TEntry')
             self.selection_state_label.config(text = 'Liquid')
         if updated_state == 's':
-            self.volume_entry.config(state = 'disabled')
-            self.mass_entry.config(state = 'enabled')
+            self.volume_entry.config(state = 'disabled', style = 'info.TEntry')
+            self.mass_entry.config(state = 'enabled', style = 'success.TEntry')
             self.selection_state_label.config(text = 'Solid')
 
     # Calculate amount of substance and display in the entry box
     def calculate_n(self):
 
-        try:
+        if CHEMICALS[self.selection_var.get()]['state'] == 'l':
 
-            if CHEMICALS[self.selection_var.get()]['state'] == 'l':
+            chemical = CHEMICALS[self.selection_var.get()]
+            v = float(self.volume_var.get())
+            density = float(chemical['density'])
 
-                chemical = CHEMICALS[self.selection_var.get()]
-                v = float(self.volume_var.get())
-                density = float(chemical['density'])
+            m = (density * 10**3) * v # Multiply by 10^3 to get density in mg/mL instead of g/mL
+            mw = chemical['MW']
+            n = m / mw
 
-                m = density * v * (10**3)
-                mw = chemical['MW']
-                n = m / mw
+            self.mass_var.set(m)
+            self.mmol_var.set(round(n, 1))
 
-                self.mass_var.set(m)
-                self.mmol_var.set(round(n, 1))
+        elif CHEMICALS[self.selection_var.get()]['state'] == 's':
+        
+            chemical = CHEMICALS[self.selection_var.get()]
 
-            elif CHEMICALS[self.selection_var.get()]['state'] == 's':
-            
-                chemical = CHEMICALS[self.selection_var.get()]
+            m = float(self.mass_entry.get())
+            mw = float(chemical['MW'])
+            n = m / mw
 
-                m = float(self.mass_entry.get())
-                mw = float(chemical['MW'])
-                n = m / mw
+            self.mmol_var.set(round(n, 1))
 
-                self.mmol_var.set(round(n, 1))
 
-        except ValueError:
-            print('Invalid input')
 
 
 
