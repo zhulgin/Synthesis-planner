@@ -37,7 +37,8 @@ class Reactant(ttk.Frame):
         self.kind_dropdown['values'] = KINDS
         self.kind_dropdown.grid(
             column = 0, row = 0, 
-            padx = PADX, pady = PADY)
+            padx = PADX, pady = PADY,
+            sticky = 'w')
 
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
@@ -46,7 +47,8 @@ class Reactant(ttk.Frame):
             width = COL_WIDTH)
         self.selection_MW_label.grid(
             column = 1, row = 1, 
-            padx = PADX, pady = PADY)
+            padx = PADX, pady = PADY,
+            sticky = 'w')
 
     # Label displaying eq of selected chemical
     def create_eq_entry(self):
@@ -57,12 +59,14 @@ class Reactant(ttk.Frame):
             width = COL_WIDTH)
         self.eq_entry.grid(
             column = 5, row = 0, 
-            padx = PADX, pady = PADY)
+            padx = PADX, pady = PADY,
+            sticky = 'w')
         ttk.Label(self, 
             text = 'eq.', 
             width = COL_WIDTH).grid(
                 column = 5, row = 1, 
-                padx = PADX, pady = PADY)
+                padx = PADX, pady = PADY,
+                sticky = 'w')
 
     # Label displaying state of selected chemical
     def create_state_label(self):
@@ -71,7 +75,8 @@ class Reactant(ttk.Frame):
             width = COL_WIDTH)
         self.selection_state_label.grid(
             column = 1, row = 2, 
-            padx = PADX, pady = PADY)
+            padx = PADX, pady = PADY,
+            sticky = 'w')
 
     # Creates dropdown menu for selecting chemical
     def create_dropdown(self):
@@ -80,7 +85,8 @@ class Reactant(ttk.Frame):
         self.selection_dropdown['values'] = list(CHEMICALS.keys())
         self.selection_dropdown.grid(
             column = 1, row = 0, 
-            padx = PADX, pady = PADY)
+            padx = PADX, pady = PADY,
+            sticky = 'w')
         self.selection_dropdown.bind('<<ComboboxSelected>>', lambda event: self.update())
         
     # Entry for mass
@@ -94,23 +100,27 @@ class Reactant(ttk.Frame):
             width = COL_WIDTH)
         self.mass_entry.grid(
             column = 2, row = 0, 
-            padx = PADX, pady = PADY)
+            padx = PADX, pady = PADY,
+            sticky = 'w')
         ttk.Label(self, 
             text = 'Mass (mg)', 
             width = COL_WIDTH).grid(
                 column = 2, row = 1, 
-                padx = PADX, pady = PADY)
+                padx = PADX, pady = PADY,
+                sticky = 'w')
 
     # Entry for volume
     def create_volume_entry(self):
         self.volume_var = tk.StringVar()
         self.volume_entry = ttk.Entry(self, textvariable = self.volume_var, state = 'disabled', style = 'info.TEntry', foreground = 'white', width = COL_WIDTH)
         self.volume_entry.grid(
-            column = 4, row = 0, 
-            padx = PADX, pady = PADY)
+            column = 3, row = 0, 
+            padx = PADX, pady = PADY,
+            sticky = 'w')
         ttk.Label(self, text = 'Volume (mL)', width = COL_WIDTH).grid(
-            column = 4, row = 1, 
-            padx = PADX, pady = PADY)
+            column = 3, row = 1, 
+            padx = PADX, pady = PADY,
+            sticky = 'w')
 
 
     # Entry for amount of substance. (Always disabled, just output)
@@ -118,11 +128,13 @@ class Reactant(ttk.Frame):
         self.mmol_var = tk.StringVar()
         self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry', foreground = 'white', width = COL_WIDTH)
         self.mmol_entry.grid(
-            column = 6, row = 0, 
-            padx = PADX, pady = PADY)
+            column = 4, row = 0, 
+            padx = PADX, pady = PADY,
+            sticky = 'w')
         ttk.Label(self, text = 'Amount of\nsubstance (mmol)', width = COL_WIDTH).grid(
-            column = 6, row = 1, 
-            padx = PADX, pady = PADY)
+            column = 4, row = 1, 
+            padx = PADX, pady = PADY,
+            sticky = 'w')
 
     # Updates molecular weight label, called when a chemical is selected from the dropdown menu
     def update(self):

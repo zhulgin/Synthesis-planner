@@ -13,26 +13,22 @@ from export_pdf import export_pdf
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        
+
         self.rows = 0
         self.reactants = []
-
         self.setup()
         self.create_buttons()
         self.create_limiting()
         
-
         self.mainloop()
 
     def setup(self):
         # Presentation
         style = ttk.Style(theme = 'darkly')
-
         self.title(APP_NAME)
         self.geometry(DIMENSIONS)
         self.resizable(True, True)
         self.iconbitmap(APP_ICON)
-
         # Key bindings
         self.bind('<Escape>', lambda event: self.destroy())
         self.bind('<Return>', lambda event: self.calculate())
@@ -45,25 +41,25 @@ class App(tk.Tk):
         self.button_frame.grid(
             column = 0, row = self.rows, 
             padx = PADX, pady = PADY)
-
         # Calculate button
-        self.calculate_button = ttk.Button(self.button_frame, 
+        self.calculate_button = ttk.Button(self.button_frame,
+            width = BUTTON_WIDTH,
             text = 'Calculate', 
             command = lambda: self.calculate())
         self.calculate_button.pack(
             side = 'left', 
             padx = PADX, pady = PADY)
-
         # Add button
         self.add_button = ttk.Button(self.button_frame, 
+            width = BUTTON_WIDTH,
             text = 'Add reactant', 
             command = lambda: self.add_reactant())
         self.add_button.pack(
             side = 'left', 
             padx = PADX, pady = PADY)
-
         # Export button
         self.export_button = ttk.Button(self.button_frame, 
+            width = BUTTON_WIDTH,
             text = 'Export pdf', 
             command = lambda: self.create_pdf())
         self.export_button.pack(
@@ -76,7 +72,7 @@ class App(tk.Tk):
     def create_limiting(self):
         self.limiting = Limiting(self)
         self.limiting.grid(
-            column = 0, row = 1, 
+            column = 0, row = self.rows, 
             padx = PADX, pady = PADY, 
             sticky = 'w')
 
