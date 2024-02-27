@@ -45,6 +45,30 @@ CHEMICALS_unsorted = {
         'density': 1.45
     },
 
+    '4-Nitrophenylchloroformate': {
+        'MW': 201.56,
+        'state': 's',
+        'density': None
+    },
+
+    'Pyridine': {
+        'MW': 79.10,
+        'state': 'l',
+        'density': 0.9819
+    },
+
+    '4-tert-Butylphenol': {
+        'MW': 150.22,
+        'state': 's',
+        'density': None
+    },
+
+    'Methyl 3-(bromomethyl)benzoate': {
+        'MW': 229.07,
+        'state': 's',
+        'density': None
+    },
+
 }
 
 CHEMICALS = {key: value for key, value in sorted(CHEMICALS_unsorted.items())}

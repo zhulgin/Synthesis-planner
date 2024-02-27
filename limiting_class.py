@@ -39,7 +39,7 @@ class Limiting(ttk.Frame):
         self.selection_dropdown = ttk.Combobox(self, 
             textvariable = self.selection_var, 
             state = 'readonly', 
-            width = COL_WIDTH - 2)
+            width = COL_WIDTH + 10)
         self.selection_dropdown['values'] = list(CHEMICALS.keys())
         self.selection_dropdown.grid(
             column = 1, row = 0, 

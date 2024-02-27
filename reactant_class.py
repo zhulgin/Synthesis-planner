@@ -81,7 +81,7 @@ class Reactant(ttk.Frame):
     # Creates dropdown menu for selecting chemical
     def create_dropdown(self):
         self.selection_var = tk.StringVar()
-        self.selection_dropdown = ttk.Combobox(self, textvariable = self.selection_var, state = 'readonly', width = COL_WIDTH - 2)
+        self.selection_dropdown = ttk.Combobox(self, textvariable = self.selection_var, state = 'readonly', width = COL_WIDTH + 10)
         self.selection_dropdown['values'] = list(CHEMICALS.keys())
         self.selection_dropdown.grid(
             column = 1, row = 0, 
