@@ -14,7 +14,7 @@ class Limiting(ttk.Frame):
         # Create labels
         self.create_kind_label()
         self.create_MW_label()
-        self.create_eq_label()
+        self.create_eq_entry()
         self.create_state_label()
         
         # Create entries and dropdown
@@ -38,9 +38,15 @@ class Limiting(ttk.Frame):
             padx = PADX, pady = PADY)
 
     # Label displaying eq of selected chemical
-    def create_eq_label(self):
-        ttk.Label(self, text = '1 eq.', width = COL_WIDTH).grid(
+    def create_eq_entry(self):
+        self.eq_var = tk.StringVar()
+        self.eq_var.set(1)
+        self.eq_entry = ttk.Entry(self, textvariable = self.eq_var, state = 'disabled', style = 'info.TEntry', foreground = 'white', width = COL_WIDTH)
+        self.eq_entry.grid(
             column = 5, row = 0, 
+            padx = PADX, pady = PADY)
+        ttk.Label(self, text = 'eq.', width = COL_WIDTH).grid(
+            column = 5, row = 1, 
             padx = PADX, pady = PADY)
 
     # Label displaying state of selected chemical

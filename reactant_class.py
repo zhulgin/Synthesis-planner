@@ -47,10 +47,10 @@ class Reactant(ttk.Frame):
         self.eq_var = tk.StringVar()
         self.eq_entry = ttk.Entry(self, textvariable = self.eq_var, style = 'success.TEntry', width = COL_WIDTH)
         self.eq_entry.grid(
-            column = 7, row = 0, 
+            column = 5, row = 0, 
             padx = PADX, pady = PADY)
         ttk.Label(self, text = 'eq.', width = COL_WIDTH).grid(
-            column = 7, row = 1, 
+            column = 5, row = 1, 
             padx = PADX, pady = PADY)
 
     # Label displaying state of selected chemical
