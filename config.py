@@ -7,3 +7,6 @@ PADX = 5
 PADY = 2
 
 KINDS = ['Reactant', 'Reagent', 'Catalyst', 'Solvent']
+COL_WIDTH = 20
+
+WEIGHT = 15
