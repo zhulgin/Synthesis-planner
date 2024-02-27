@@ -46,7 +46,7 @@ class Limiting(ttk.Frame):
     # Entry for amount of substance. (Always disabled, just output)
     def create_mmol_entry(self):
         self.mmol_var = tk.StringVar()
-        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry')
+        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry', foreground = 'white')
         self.mmol_entry.grid(column = 6, row = 0, padx = PADX, pady = PADY)
         ttk.Label(self, text = "Amount of substance (mmol)").grid(column = 6, row = 1, padx = PADX, pady = PADY)
 
@@ -84,11 +84,11 @@ class Limiting(ttk.Frame):
 
         updated_state = CHEMICALS[self.selection_var.get()]['state']
         if updated_state == 'l':
-            self.mass_entry.config(state = 'disabled', style = 'info.TEntry')
+            self.mass_entry.config(state = 'disabled', style = 'info.TEntry', foreground = 'white')
             self.volume_entry.config(state = 'enabled', style = 'success.TEntry')
             self.selection_state_label.config(text = 'Liquid')
         if updated_state == 's':
-            self.volume_entry.config(state = 'disabled', style = 'info.TEntry')
+            self.volume_entry.config(state = 'disabled', style = 'info.TEntry', foreground = 'white')
             self.mass_entry.config(state = 'enabled', style = 'success.TEntry')
             self.selection_state_label.config(text = 'Solid')
 
@@ -106,7 +106,7 @@ class Limiting(ttk.Frame):
             n = m / mw
 
             self.mass_var.set(m)
-            self.mmol_var.set(round(n, 1))
+            self.mmol_var.set(round(n, 2))
 
         elif CHEMICALS[self.selection_var.get()]['state'] == 's':
         
@@ -116,7 +116,7 @@ class Limiting(ttk.Frame):
             mw = float(chemical['MW'])
             n = m / mw
 
-            self.mmol_var.set(round(n, 1))
+            self.mmol_var.set(round(n, 2))
 
 
 

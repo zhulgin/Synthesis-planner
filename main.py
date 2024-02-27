@@ -27,7 +27,6 @@ class App(tk.Tk):
         # Presentation
         style = ttk.Style(theme = 'darkly')
 
-
         self.title(APP_NAME)
         self.geometry(DIMENSIONS)
         self.resizable(True, True)

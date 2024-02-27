@@ -61,14 +61,14 @@ class Reactant(ttk.Frame):
     # Entry for mass
     def create_mass_entry(self):
         self.mass_var = tk.StringVar()
-        self.mass_entry = ttk.Entry(self, textvariable = self.mass_var, state = 'disabled', style = 'info.TEntry')
+        self.mass_entry = ttk.Entry(self, textvariable = self.mass_var, state = 'disabled', style = 'info.TEntry', foreground = 'white')
         self.mass_entry.grid(column = 2, row = 0, padx = PADX, pady = PADY)
         ttk.Label(self, text = 'Mass (mg)').grid(column = 2, row = 1, padx = PADX, pady = PADY)
 
     # Entry for volume
     def create_volume_entry(self):
         self.volume_var = tk.StringVar()
-        self.volume_entry = ttk.Entry(self, textvariable = self.volume_var, state = 'disabled', style = 'info.TEntry')
+        self.volume_entry = ttk.Entry(self, textvariable = self.volume_var, state = 'disabled', style = 'info.TEntry', foreground = 'white')
         self.volume_entry.grid(column = 4, row = 0, padx = PADX, pady = PADY)
         ttk.Label(self, text = 'Volume (mL)').grid(column = 4, row = 1, padx = PADX, pady = PADY)
 
@@ -76,9 +76,14 @@ class Reactant(ttk.Frame):
     # Entry for amount of substance. (Always disabled, just output)
     def create_mmol_entry(self):
         self.mmol_var = tk.StringVar()
-        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry')
+        self.mmol_entry = ttk.Entry(self, textvariable = self.mmol_var, state = 'disabled', style = 'info.TEntry', foreground = 'white')
         self.mmol_entry.grid(column = 6, row = 0, padx = PADX, pady = PADY)
         ttk.Label(self, text = "Amount of substance (mmol)").grid(column = 6, row = 1, padx = PADX, pady = PADY)
+
+    # Updates molecular weight label, called when a chemical is selected from the dropdown menu
+    def update(self):
+        updated_MW = CHEMICALS[self.selection_var.get()]['MW']
+        self.selection_MW_label.config(text = f'{updated_MW} g/mol')
     
         
 
