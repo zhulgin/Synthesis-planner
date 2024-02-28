@@ -13,8 +13,9 @@ from export_pdf import export_pdf
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        
         self.setup()
+        self.create_frames()
+        self.place_frames()
         self.create_widgets()
         self.place_widgets()
         self.mainloop()
@@ -30,76 +31,85 @@ class App(tk.Tk):
         # Key bindings
         self.bind('<Escape>', lambda event: self.destroy())
         self.bind('<Return>', lambda event: self.calculate())
-        # Create frame for calculations (inputs and outputs)
-        self.calculations_frame = ttk.Frame(self)
         # Variable to keep track of rows in calculations_frame
         self.rows = 0
         # List containing all added reactants
         self.reactants = []
 
-    def create_widgets(self):
-        self.create_buttons()
-        self.create_limiting()
-        self.create_help_label()
-
+    # Create frames to place widgets in
     def create_frames(self):
-        pass
+        # Create frame for help label
+        self.help_frame = ttk.Frame(self)
+        # Create fram for buttons
+        self.button_frame = ttk.Frame(self)
+        # Create frame for calculations (inputs and outputs)
+        self.calculations_frame = ttk.Frame(self)
 
-    def place_widgets(self):
-
+    # Place the frames in the window using pack()
+    def place_frames(self):
+        self.help_frame.pack(anchor = 'w')
+        self.button_frame.pack()
         self.calculations_frame.pack()
 
-
-    def create_buttons(self):
-        # Frame for buttons
-        self.button_frame = ttk.Frame(self.calculations_frame)
-        self.button_frame.grid(
-            column = 0, row = self.rows, 
+    # Create widgets
+    def create_widgets(self):
+        self.create_help_label()
+        self.create_buttons()
+        self.create_limiting()
+        
+    # Place widgets into their respective frames
+    def place_widgets(self):
+        # Help frame
+        self.help_label.pack(anchor = 'w')
+        # Buttons frame
+        self.calculate_button.pack(
+            side = 'left', 
             padx = PADX, pady = PADY)
+        self.add_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
+        self.export_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
+        self.rows += 1
+        # Limiting frame
+        self.limiting.grid(
+            column = 0, row = self.rows, 
+            padx = PADX, pady = PADY, 
+            sticky = 'w')
+        self.rows += 1
+
+    # Create label explaining the colors
+    def create_help_label(self):
+        self.help_label = ttk.Label(self.help_frame, 
+            text = HELP_LABEL,
+            font = ('Arial', 12))
+
+    # Create the buttons
+    def create_buttons(self):
         # Calculate button
         self.calculate_button = ttk.Button(self.button_frame,
             width = BUTTON_WIDTH,
             text = 'Calculate', 
             command = lambda: self.calculate())
-        self.calculate_button.pack(
-            side = 'left', 
-            padx = PADX, pady = PADY)
+        
         # Add button
         self.add_button = ttk.Button(self.button_frame, 
             width = BUTTON_WIDTH,
             text = 'Add reactant', 
             command = lambda: self.add_reactant())
-        self.add_button.pack(
-            side = 'left', 
-            padx = PADX, pady = PADY)
+        
         # Export button
         self.export_button = ttk.Button(self.button_frame, 
             width = BUTTON_WIDTH,
             text = 'Export pdf', 
             command = lambda: self.create_pdf())
-        self.export_button.pack(
-            side = 'left', 
-            padx = PADX, pady = PADY)
-
-        self.rows += 1
-
-
+    
+    # Create the row where limiting reactant is specified
     def create_limiting(self):
         self.limiting = Limiting(self.calculations_frame)
-        self.limiting.grid(
-            column = 0, row = self.rows, 
-            padx = PADX, pady = PADY, 
-            sticky = 'w')
 
-        self.rows += 1
-        
-
-    def create_help_label(self):
-        self.help_label = ttk.Label(self, 
-            text = 'Green = input\nBlue = output',
-            font = ('Arial', 12))
-        self.help_label.pack(anchor = 'w')
-
+    # Add a row for a non-limiting reactant. This function is called when the corresponding button is pressed.
     def add_reactant(self):
         new_reactant = Reactant(self.calculations_frame)
         new_reactant.grid(
@@ -110,14 +120,13 @@ class App(tk.Tk):
 
         self.rows += 1
 
+    # Do the calculations and update information in respective fields
     def calculate(self):
         try:
             self.limiting.calculate_n()
-
             limiting_n = float(self.limiting.mmol_var.get())
 
             for reactant in self.reactants:
-                
                 chemical_name = reactant.selection_var.get()
                 mw = CHEMICALS[chemical_name]['MW']
                 eq = float(reactant.eq_var.get())
@@ -135,15 +144,12 @@ class App(tk.Tk):
 
                 elif CHEMICALS[chemical_name]['state'] == 's':
                     v = 'N/A'
-                    reactant.volume_var.set(v)
-
-                
-        
+                    reactant.volume_var.set(v) 
         except:
             print('Invalid input')
 
+    # Export experiment plan to pdf file using typst
     def create_pdf(self):
-        
         try:
             self.calculate()
             limiting_name = self.limiting.selection_var.get()
@@ -156,9 +162,7 @@ class App(tk.Tk):
                     'mass': limiting_m,
                     'volume': limiting_v,
                     'amount': limiting_n,
-                    'eq': 1
-                }
-            }
+                    'eq': 1}}
 
             for reactant in self.reactants:
                 name = reactant.selection_var.get()
@@ -171,12 +175,11 @@ class App(tk.Tk):
                     'mass': m,
                     'volume': v,
                     'amount': n,
-                    'eq': eq
-                }
+                    'eq': eq}
             export_pdf(experiment_info)
         except:
             print('Export error')
-    
 
+# Run the application
 if __name__ == "__main__":
     App()

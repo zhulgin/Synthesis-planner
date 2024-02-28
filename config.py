@@ -13,3 +13,5 @@ COL_WIDTH = 12
 COL0_WIDTH = 16
 
 BUTTON_WIDTH = 20
+
+HELP_LABEL = 'Green = input\nBlue = output'
