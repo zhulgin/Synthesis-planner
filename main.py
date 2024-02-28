@@ -19,6 +19,7 @@ class App(tk.Tk):
         self.setup()
         self.create_buttons()
         self.create_limiting()
+        self.create_help_label()
         
         self.mainloop()
 
@@ -79,6 +80,12 @@ class App(tk.Tk):
         self.rows += 1
         
 
+    def create_help_label(self):
+        self.help_label = ttk.Label(self, 
+            text = 'Green = input\nBlue = output',
+            font = ('Arial', 12))
+        self.help_label.place(x = 20, y = WINDOW_HEIGHT - 50, bordermode = 'inside')
+
     def add_reactant(self):
         new_reactant = Reactant(self)
         new_reactant.grid(
@@ -110,11 +117,13 @@ class App(tk.Tk):
                 if CHEMICALS[chemical_name]['state'] == 'l':
                     density = CHEMICALS[chemical_name]['density']
                     v = m / (density * 10**3) # Multiply by 10^3 to get density in mg/mL instead of g/mL
+                    reactant.volume_var.set(round(v, 2))
 
                 elif CHEMICALS[chemical_name]['state'] == 's':
                     v = 'N/A'
+                    reactant.volume_var.set(v)
 
-                reactant.volume_var.set(round(v, 2))
+                
         
         except:
             print('Invalid input')
