@@ -13,16 +13,13 @@ from export_pdf import export_pdf
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-
-        self.rows = 0
-        self.reactants = []
-        self.setup()
-        self.create_buttons()
-        self.create_limiting()
-        self.create_help_label()
         
+        self.setup()
+        self.create_widgets()
+        self.place_widgets()
         self.mainloop()
 
+    # Set properties, style, variables etc.
     def setup(self):
         # Presentation
         style = ttk.Style(theme = 'darkly')
@@ -33,12 +30,29 @@ class App(tk.Tk):
         # Key bindings
         self.bind('<Escape>', lambda event: self.destroy())
         self.bind('<Return>', lambda event: self.calculate())
+        # Create frame for calculations (inputs and outputs)
+        self.calculations_frame = ttk.Frame(self)
+        # Variable to keep track of rows in calculations_frame
+        self.rows = 0
+        # List containing all added reactants
+        self.reactants = []
 
-        
+    def create_widgets(self):
+        self.create_buttons()
+        self.create_limiting()
+        self.create_help_label()
+
+    def create_frames(self):
+        pass
+
+    def place_widgets(self):
+
+        self.calculations_frame.pack()
+
 
     def create_buttons(self):
         # Frame for buttons
-        self.button_frame = ttk.Frame(self)
+        self.button_frame = ttk.Frame(self.calculations_frame)
         self.button_frame.grid(
             column = 0, row = self.rows, 
             padx = PADX, pady = PADY)
@@ -71,7 +85,7 @@ class App(tk.Tk):
 
 
     def create_limiting(self):
-        self.limiting = Limiting(self)
+        self.limiting = Limiting(self.calculations_frame)
         self.limiting.grid(
             column = 0, row = self.rows, 
             padx = PADX, pady = PADY, 
@@ -84,10 +98,10 @@ class App(tk.Tk):
         self.help_label = ttk.Label(self, 
             text = 'Green = input\nBlue = output',
             font = ('Arial', 12))
-        self.help_label.place(x = 20, y = WINDOW_HEIGHT - 50, bordermode = 'inside')
+        self.help_label.pack(anchor = 'w')
 
     def add_reactant(self):
-        new_reactant = Reactant(self)
+        new_reactant = Reactant(self.calculations_frame)
         new_reactant.grid(
             column = 0, row = self.rows, 
             padx = PADX, pady = PADY, 

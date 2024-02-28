@@ -32,7 +32,7 @@ class Reactant(ttk.Frame):
         self.kind_dropdown = ttk.Combobox(self, 
             textvariable = self.kind_var, 
             state = 'readonly', 
-            width = COL_WIDTH - 2)
+            width = COL0_WIDTH - 2)
         
         self.kind_dropdown['values'] = KINDS
         self.kind_dropdown.grid(

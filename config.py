@@ -10,5 +10,6 @@ PADY = 2
 
 KINDS = ['Reactant', 'Reagent', 'Catalyst', 'Solvent']
 COL_WIDTH = 12
+COL0_WIDTH = 16
 
 BUTTON_WIDTH = 20

@@ -27,7 +27,7 @@ class Limiting(ttk.Frame):
             textvariable = self.kind_var, 
             state = 'disabled', 
             foreground = 'white', 
-            width = COL_WIDTH).grid(
+            width = COL0_WIDTH).grid(
                 column = 0, row = 0, 
                 padx = PADX, pady = PADY,
                 sticky = 'w')
