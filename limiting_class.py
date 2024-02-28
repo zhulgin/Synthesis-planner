@@ -61,6 +61,9 @@ class Limiting(ttk.Frame):
         self.mass_var = tk.StringVar()
         self.mass_entry = ttk.Entry(self, 
             textvariable = self.mass_var, 
+            state = 'disabled', 
+            style = 'info.TEntry', 
+            foreground = 'white',
             width = COL_WIDTH)
         self.mass_entry.grid(
             column = 2, row = 0, 
@@ -78,6 +81,9 @@ class Limiting(ttk.Frame):
         self.volume_var = tk.StringVar()
         self.volume_entry = ttk.Entry(self, 
             textvariable = self.volume_var, 
+            state = 'disabled', 
+            style = 'info.TEntry', 
+            foreground = 'white',
             width = COL_WIDTH)
         self.volume_entry.grid(
             column = 3, row = 0, 

@@ -89,7 +89,7 @@ class App(tk.Tk):
     def create_help_label(self):
         self.help_label = ttk.Label(self.help_frame, 
             text = HELP_LABEL,
-            font = ('Arial', 12))
+            font = ('Arial', 9), foreground = 'gray')
 
     # Create the buttons
     def create_buttons(self):
@@ -174,7 +174,7 @@ class App(tk.Tk):
             for reactant in self.reactants:
                 name = reactant.selection_var.get()
                 kind = reactant.kind_var.get()
-                m = reactant.mass_var.get(),
+                m = reactant.mass_var.get()
                 v = reactant.volume_var.get()
                 n = reactant.mmol_var.get()
                 eq = reactant.eq_var.get()
