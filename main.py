@@ -8,7 +8,7 @@ from chemicals import CHEMICALS
 # Import classes and functions
 from limiting_class import Limiting
 from reactant_class import Reactant
-from export_pdf import export_pdf
+from typst_pdf import typst_pdf
 
 class App(tk.Tk):
     def __init__(self):
@@ -143,7 +143,7 @@ class App(tk.Tk):
                     reactant.volume_var.set(round(v, 2))
 
                 elif CHEMICALS[chemical_name]['state'] == 's':
-                    v = 'N/A'
+                    v = ''
                     reactant.volume_var.set(v) 
         except:
             print('Invalid input')
@@ -159,6 +159,7 @@ class App(tk.Tk):
 
             experiment_info = {
                 limiting_name: {
+                    'kind': 'Limiting',
                     'mass': limiting_m,
                     'volume': limiting_v,
                     'amount': limiting_n,
@@ -166,17 +167,19 @@ class App(tk.Tk):
 
             for reactant in self.reactants:
                 name = reactant.selection_var.get()
+                kind = reactant.kind_var.get()
                 m = reactant.mass_var.get(),
                 v = reactant.volume_var.get()
                 n = reactant.mmol_var.get()
                 eq = reactant.eq_var.get()
 
                 experiment_info[name] = {
+                    'kind': kind,
                     'mass': m,
                     'volume': v,
                     'amount': n,
                     'eq': eq}
-            export_pdf(experiment_info)
+            typst_pdf(experiment_info)
         except:
             print('Export error')
 
