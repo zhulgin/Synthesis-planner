@@ -1,6 +1,7 @@
 # Import external packages
 import tkinter as tk
 import ttkbootstrap as ttk
+from ttkbootstrap.scrolled import ScrolledFrame
 # Import constants from config file
 from config import *
 # Import chemicals dictionary
@@ -13,11 +14,16 @@ from typst_pdf import typst_pdf
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
+
         self.setup()
         self.create_frames()
         self.place_frames()
         self.create_widgets()
         self.place_widgets()
+
+        # scroll test
+
+
         self.mainloop()
 
     # Set properties, style, variables etc.
@@ -43,13 +49,13 @@ class App(tk.Tk):
         # Create fram for buttons
         self.button_frame = ttk.Frame(self)
         # Create frame for calculations (inputs and outputs)
-        self.calculations_frame = ttk.Frame(self)
+        self.calculations_frame = ScrolledFrame(self, autohide = True)
 
     # Place the frames in the window using pack()
     def place_frames(self):
-        self.help_frame.pack(anchor = 'w')
-        self.button_frame.pack()
-        self.calculations_frame.pack()
+        self.help_frame.pack(anchor = 'w', padx = PADX, pady = PADY)
+        self.button_frame.pack(padx = PADX, pady = PADY)
+        self.calculations_frame.pack(fill = 'both', expand = 'yes', padx = PADX, pady = PADY)
 
     # Create widgets
     def create_widgets(self):
