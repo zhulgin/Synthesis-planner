@@ -1,8 +1,7 @@
 
 #set text(12pt, font: "New Computer Modern Sans")
-#table(columns: 5,
-[*Chemical*], [*Mass (mg)*], [*Volume (mL)*], [*Amount of substance (mmol)*], [*Equivalents*],
+#set page(flipped: true, header: [Experiment 2024-02-28])
+#table(columns: 6,
+[], [*Chemical*], [*Mass (mg)*], [*Volume (mL)*], [*Amount of substance (mmol)*], [*Equivalents*],
 
-[3-Iodoanisole], [3930.0], [2], [16.79], [1], 
-[3-Ethynylanisole], [('2662.76',)], [2.56], [20.15], [1.2], 
-[Pd(PPh3)4], [('970.12',)], [N/A], [0.84], [0.05], )
+[Limiting], [4-Nitrophenylchloroformate], [7], [], [0.03], [1], )
