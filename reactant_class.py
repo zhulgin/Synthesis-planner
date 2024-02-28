@@ -43,8 +43,7 @@ class Reactant(ttk.Frame):
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
         self.selection_MW_label = ttk.Label(self, 
-            text = 'No chemical selected', 
-            width = COL_WIDTH)
+            text = 'No chemical selected')
         self.selection_MW_label.grid(
             column = 1, row = 1, 
             padx = PADX, pady = PADY,
