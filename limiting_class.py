@@ -124,7 +124,7 @@ class Limiting(ttk.Frame):
             padx = PADX, pady = PADY,
             sticky = 'w')
         ttk.Label(self, 
-            text = 'eq.', 
+            text = 'Eq.', 
             width = COL_WIDTH).grid(
                 column = 5, row = 1, 
                 padx = PADX, pady = PADY,
