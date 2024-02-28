@@ -15,9 +15,9 @@ def typst_pdf(reactants):
         eq = reactants[reactant]['eq']
 
         row = f'\n[{kind}], [{name}], [{m}], [{v}], [{n}], [{eq}], '
-        typst_content = typst_content + row
+        typst_content += row
 
-    typst_content = typst_content + ')'
+    typst_content += ')'
 
     with open('output.typ', 'w') as f:
         f.write(typst_content)

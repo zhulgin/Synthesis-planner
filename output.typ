@@ -4,4 +4,4 @@
 #table(columns: 6,
 [], [*Chemical*], [*Mass (mg)*], [*Volume (mL)*], [*Amount of substance (mmol)*], [*Equivalents*],
 
-[Limiting], [4-Nitrophenylchloroformate], [7], [], [0.03], [1], )
+[Limiting], [4-tert-Butylphenol], [11], [], [0.07], [1], )
