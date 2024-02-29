@@ -1,6 +1,6 @@
 from datetime import date
 
-APP_NAME = 'Experiment Planner'
+APP_NAME = 'Synthesis Planner'
 WINDOW_WIDTH = 1200
 WINDOW_HEIGHT = 600
 DIMENSIONS = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
