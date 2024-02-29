@@ -1,6 +1,6 @@
 # Import external packages
 import tkinter as tk
-import ttkbootstrap as ttk
+import ttkbootstrap as tb
 from ttkbootstrap.scrolled import ScrolledFrame
 # Import constants from config file
 from config import *
@@ -9,7 +9,7 @@ from chemicals import CHEMICALS
 # Import classes and functions
 from limiting_class import Limiting
 from reactant_class import Reactant
-from typst_pdf import typst_pdf
+from export_file import export_pdf, export_txt
 
 class App(tk.Tk):
     def __init__(self):
@@ -26,7 +26,7 @@ class App(tk.Tk):
     # Set properties, style, variables etc.
     def setup(self):
         # Presentation
-        style = ttk.Style(theme = 'darkly')
+        style = tb.Style(theme = 'darkly')
         self.title(APP_NAME)
         self.geometry(DIMENSIONS)
         self.resizable(True, True)
@@ -42,9 +42,9 @@ class App(tk.Tk):
     # Create frames to place widgets in
     def create_frames(self):
         # Create frame for help label
-        self.help_frame = ttk.Frame(self)
+        self.help_frame = tb.Frame(self)
         # Create fram for buttons
-        self.button_frame = ttk.Frame(self)
+        self.button_frame = tb.Frame(self)
         # Create frame for calculations (inputs and outputs)
         self.calculations_frame = ScrolledFrame(self, autohide = True)
 
@@ -65,13 +65,16 @@ class App(tk.Tk):
         # Help frame
         self.help_label.pack(anchor = 'w')
         # Buttons frame
-        self.calculate_button.pack(
-            side = 'left', 
-            padx = PADX, pady = PADY)
         self.add_button.pack(
             side = 'left', 
             padx = PADX, pady = PADY)
-        self.export_button.pack(
+        self.calculate_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
+        self.export_text_button.pack(
+            side = 'left', 
+            padx = PADX, pady = PADY)
+        self.export_pdf_button.pack(
             side = 'left', 
             padx = PADX, pady = PADY)
         self.rows += 1
@@ -84,26 +87,29 @@ class App(tk.Tk):
 
     # Create label explaining the colors
     def create_help_label(self):
-        self.help_label = ttk.Label(self.help_frame, 
+        self.help_label = tb.Label(self.help_frame, 
             text = HELP_LABEL,
             font = ('Arial', 9), foreground = 'gray')
 
     # Create the buttons
     def create_buttons(self):
-        # Calculate button
-        self.calculate_button = ttk.Button(self.button_frame,
-            width = BUTTON_WIDTH,
-            text = 'Calculate', 
-            command = lambda: self.calculate())
-        
         # Add button
-        self.add_button = ttk.Button(self.button_frame, 
+        self.add_button = tb.Button(self.button_frame, 
             width = BUTTON_WIDTH,
             text = 'Add reactant', 
             command = lambda: self.add_reactant())
-        
-        # Export button
-        self.export_button = ttk.Button(self.button_frame, 
+        # Calculate button
+        self.calculate_button = tb.Button(self.button_frame,
+            width = BUTTON_WIDTH,
+            text = 'Calculate', 
+            command = lambda: self.calculate())
+        # Export txt button
+        self.export_text_button = tb.Button(self.button_frame, 
+            width = BUTTON_WIDTH,
+            text = 'Export text', 
+            command = lambda: self.create_txt())
+        # Export pdf button
+        self.export_pdf_button = tb.Button(self.button_frame, 
             width = BUTTON_WIDTH,
             text = 'Export pdf', 
             command = lambda: self.create_pdf())
@@ -151,38 +157,48 @@ class App(tk.Tk):
         except:
             print('Invalid input')
 
+    # Get experiment information for file export
+    def get_experiment_info(self):
+
+        self.calculate()
+        limiting_name = self.limiting.selection_var.get()
+        limiting_n = self.limiting.mmol_var.get()
+        limiting_m = self.limiting.mass_var.get()
+        limiting_v = self.limiting.volume_var.get()
+        experiment_info = {
+            limiting_name: {
+                'kind': 'Limiting',
+                'mass': limiting_m,
+                'volume': limiting_v,
+                'amount': limiting_n,
+                'eq': 1}}
+
+        for reactant in self.reactants:
+            name = reactant.selection_var.get()
+            kind = reactant.kind_var.get()
+            m = reactant.mass_var.get()
+            v = reactant.volume_var.get()
+            n = reactant.mmol_var.get()
+            eq = reactant.eq_var.get()
+            experiment_info[name] = {
+                'kind': kind,
+                'mass': m,
+                'volume': v,
+                'amount': n,
+                'eq': eq}
+        
+        return(experiment_info)
+
     # Export experiment plan to pdf file using typst
     def create_pdf(self):
         try:
-            self.calculate()
-            limiting_name = self.limiting.selection_var.get()
-            limiting_n = self.limiting.mmol_var.get()
-            limiting_m = self.limiting.mass_var.get()
-            limiting_v = self.limiting.volume_var.get()
+            export_pdf(self.get_experiment_info())
+        except:
+            print('Export error')
 
-            experiment_info = {
-                limiting_name: {
-                    'kind': 'Limiting',
-                    'mass': limiting_m,
-                    'volume': limiting_v,
-                    'amount': limiting_n,
-                    'eq': 1}}
-
-            for reactant in self.reactants:
-                name = reactant.selection_var.get()
-                kind = reactant.kind_var.get()
-                m = reactant.mass_var.get()
-                v = reactant.volume_var.get()
-                n = reactant.mmol_var.get()
-                eq = reactant.eq_var.get()
-
-                experiment_info[name] = {
-                    'kind': kind,
-                    'mass': m,
-                    'volume': v,
-                    'amount': n,
-                    'eq': eq}
-            typst_pdf(experiment_info)
+    def create_txt(self):
+        try:
+            export_txt(self.get_experiment_info())
         except:
             print('Export error')
 

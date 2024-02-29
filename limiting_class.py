@@ -1,13 +1,13 @@
 # Import external packages
 import tkinter as tk
-import ttkbootstrap as ttk
+import ttkbootstrap as tb
 # Import constants from config file
 from config import *
 # Import chemicals dictionary
 from chemicals import CHEMICALS
 
 
-class Limiting(ttk.Frame):
+class Limiting(tb.Frame):
     def __init__(self, parent):
         super().__init__(master = parent)
 
@@ -23,7 +23,7 @@ class Limiting(ttk.Frame):
     def create_kind_entry(self):
         self.kind_var = tk.StringVar()
         
-        ttk.Entry(self, 
+        tb.Entry(self, 
             textvariable = self.kind_var, 
             state = 'disabled', 
             foreground = 'white', 
@@ -36,7 +36,7 @@ class Limiting(ttk.Frame):
     # Creates dropdown menu for selecting chemical
     def create_dropdown(self):
         self.selection_var = tk.StringVar()
-        self.selection_dropdown = ttk.Combobox(self, 
+        self.selection_dropdown = tb.Combobox(self, 
             textvariable = self.selection_var, 
             state = 'readonly', 
             width = COL_WIDTH + 10)
@@ -49,7 +49,7 @@ class Limiting(ttk.Frame):
 
     # Creates label displaying molecular weight of selected chemical
     def create_MW_label(self):
-        self.selection_MW_label = ttk.Label(self, 
+        self.selection_MW_label = tb.Label(self, 
             text = 'No chemical selected')
         self.selection_MW_label.grid(
             column = 1, row = 1, 
@@ -59,7 +59,7 @@ class Limiting(ttk.Frame):
     # Entry for mass
     def create_mass_entry(self):
         self.mass_var = tk.StringVar()
-        self.mass_entry = ttk.Entry(self, 
+        self.mass_entry = tb.Entry(self, 
             textvariable = self.mass_var, 
             state = 'disabled', 
             style = 'info.TEntry', 
@@ -69,8 +69,8 @@ class Limiting(ttk.Frame):
             column = 2, row = 0, 
             padx = PADX, pady = PADY,
             sticky = 'w')
-        ttk.Label(self, 
-            text = 'Mass (mg)', 
+        tb.Label(self, 
+            text = MASS_DESC, 
             width = COL_WIDTH).grid(
                 column = 2, row = 1, 
                 padx = PADX, pady = PADY,
@@ -79,7 +79,7 @@ class Limiting(ttk.Frame):
     # Entry for volume
     def create_volume_entry(self):
         self.volume_var = tk.StringVar()
-        self.volume_entry = ttk.Entry(self, 
+        self.volume_entry = tb.Entry(self, 
             textvariable = self.volume_var, 
             state = 'disabled', 
             style = 'info.TEntry', 
@@ -89,8 +89,8 @@ class Limiting(ttk.Frame):
             column = 3, row = 0, 
             padx = PADX, pady = PADY,
             sticky = 'w')
-        ttk.Label(self, 
-            text = 'Volume (mL)').grid(
+        tb.Label(self, 
+            text = VOLUME_DESC).grid(
                 column = 3, row = 1, 
                 padx = PADX, pady = PADY,
                 sticky = 'w')
@@ -98,7 +98,7 @@ class Limiting(ttk.Frame):
     # Entry for amount of substance. (Always disabled, just output)
     def create_mmol_entry(self):
         self.mmol_var = tk.StringVar()
-        self.mmol_entry = ttk.Entry(self, 
+        self.mmol_entry = tb.Entry(self, 
             textvariable = self.mmol_var, 
             state = 'disabled', 
             style = 'info.TEntry', 
@@ -108,8 +108,8 @@ class Limiting(ttk.Frame):
             column = 4, row = 0, 
             padx = PADX, pady = PADY,
             sticky = 'w')
-        ttk.Label(self, 
-            text = "Amount of\nsubstance (mmol)", 
+        tb.Label(self, 
+            text = AMOUNT_DESC, 
             width = COL_WIDTH).grid(
                 column = 4, row = 1, 
                 padx = PADX, pady = PADY,
@@ -119,7 +119,7 @@ class Limiting(ttk.Frame):
     def create_eq_entry(self):
         self.eq_var = tk.StringVar()
         self.eq_var.set(1)
-        self.eq_entry = ttk.Entry(self, 
+        self.eq_entry = tb.Entry(self, 
             textvariable = self.eq_var, 
             state = 'disabled', 
             style = 'info.TEntry', 
@@ -129,8 +129,8 @@ class Limiting(ttk.Frame):
             column = 5, row = 0, 
             padx = PADX, pady = PADY,
             sticky = 'w')
-        ttk.Label(self, 
-            text = 'Eq.', 
+        tb.Label(self, 
+            text = EQ_DESC, 
             width = COL_WIDTH).grid(
                 column = 5, row = 1, 
                 padx = PADX, pady = PADY,
