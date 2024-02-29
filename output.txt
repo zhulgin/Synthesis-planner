@@ -1,7 +1,0 @@
-
-Experiment 2024-02-29
-
-Kind	Chemical	Mass (mg)	Volume (mL)	Amount of substance (mmol)	Equivalents
-
-Limiting	4-tert-Butylphenol	9		0.06	1
-Reagent	LiAlH4	20.49		0.54	9
