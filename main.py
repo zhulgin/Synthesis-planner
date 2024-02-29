@@ -21,9 +21,6 @@ class App(tk.Tk):
         self.create_widgets()
         self.place_widgets()
 
-        # scroll test
-
-
         self.mainloop()
 
     # Set properties, style, variables etc.
