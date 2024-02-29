@@ -155,7 +155,7 @@ class App(tk.Tk):
                     v = ''
                     reactant.volume_var.set(v) 
         except:
-            print('Invalid input')
+            print('Invalid input ')
 
     # Get experiment information for file export
     def get_experiment_info(self):
