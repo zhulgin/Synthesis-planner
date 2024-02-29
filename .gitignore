@@ -5,3 +5,5 @@
 output.txt
 *.pdf
 *.typ
+mac_env/
+win_env/
