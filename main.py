@@ -1,6 +1,6 @@
 # Import external packages
 import tkinter as tk
-import ttkbootstrap as tb
+import ttkbootstrap as tb 
 from ttkbootstrap.scrolled import ScrolledFrame
 # Import constants from config file
 from config import *
