@@ -7,3 +7,4 @@ output.txt
 *.typ
 mac_env/
 win_env/
+__pycache__/
